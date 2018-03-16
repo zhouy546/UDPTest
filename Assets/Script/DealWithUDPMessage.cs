@@ -17,7 +17,7 @@ using UnityEngine;
 
 public class DealWithUDPMessage : MonoBehaviour {
     public enum myenum{ message1,message2,message3,nothing}
-   
+
     //public FocusByUDP focusByUDPClass;//根据UDP数据处理相机移动的类
     private string dataTest;
     public delegate void foo();
@@ -26,7 +26,9 @@ public class DealWithUDPMessage : MonoBehaviour {
     public static event foo EventC;
     public void OnEnable()
     {
+      
         EventA += EA;
+        EventA += WADA;
         EventB += EB;
         EventC += EC;
     }
@@ -34,6 +36,7 @@ public class DealWithUDPMessage : MonoBehaviour {
     public void OnDisable()
     {
         EventA -= EA;
+        EventA -= WADA;
         EventB -= EB;
         EventC -= EC;
     }
@@ -44,6 +47,7 @@ public class DealWithUDPMessage : MonoBehaviour {
     public void MessageManage(string _data)
     {
         dataTest = _data;
+        Debug.Log(dataTest);
         //    focusByUDPClass.CameraFocusON(_data);
 
 
@@ -113,6 +117,11 @@ public class DealWithUDPMessage : MonoBehaviour {
     public void EA() {
         Debug.Log("EVENT A BEEN DOING");
     }
+
+    public void WADA() {
+        Debug.Log("WADA DOING");
+    }
+
     public void EB()
     {
         Debug.Log("EVENT B BEEN DOING");
@@ -124,6 +133,9 @@ public class DealWithUDPMessage : MonoBehaviour {
 
     private void Update()
     {
+       if(Input.GetMouseButtonDown(0)) {
+            EventA -= WADA;
+        }
        // Debug.Log("数据：" + dataTest);  
     }
 

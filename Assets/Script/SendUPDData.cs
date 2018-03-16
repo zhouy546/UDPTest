@@ -11,8 +11,21 @@ using System.Text;
 /// </summary>
 public class SendUPDData : MonoBehaviour {
 
-    public string udpData_str;
-    [Tooltip("接受端口号")] public int m_ReceivePort = 29010;//接收的端口号 
+    private string udpdata_str;
+    public string udpData_str {
+        get
+        {
+            return udpdata_str;
+        }
+        set
+        {
+            udpdata_str = value;
+            string _sSend = "";
+            _sSend = udpData_str;
+            udp_Send(_sSend, m_ip, m_ReceivePort);
+        }
+    }
+    [Tooltip("接受端口号")] public int m_ReceivePort = 8080;//接收的端口号 
     Socket udpserver = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
     private string m_ip;//定义一个IP地址
 
@@ -43,8 +56,12 @@ public class SendUPDData : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        string _sSend = "";
-        _sSend = udpData_str;
-        udp_Send(_sSend, m_ip, m_ReceivePort);
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            StartSendMessage("sent a message");
+        }
+    }
+
+    public void StartSendMessage(string _sting) {
+        udpData_str = _sting;
     }
 }

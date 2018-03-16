@@ -35,6 +35,7 @@ public class GetUDPMessage: MonoBehaviour
     {
         //得到本机IP，设置TCP端口号        
         m_ip = new IPEndPoint(IPAddress.Any, m_ReceivePort);//设置自身的IP和端口号，在这里IPAddress.Any是自动获取本机IP
+        Debug.Log(m_ip);
         m_newsock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);//实例化socket对象设置寻址方案为internetwork（IP版本的4存放）,设置Soket的类型，为Dgram（支持数据报形式的数据），设置协议的类型，为UDP
         //绑定网络地址
         m_newsock.Bind(m_ip);//绑定IP
@@ -47,7 +48,7 @@ public class GetUDPMessage: MonoBehaviour
 	/// </summary>
     void Update()
     {
-      //  Debug.Log("GetUPDMessage.cs:");
+        //  Debug.Log("GetUPDMessage.cs:");
         //判断是否有数据
         if (m_array_data.Count <= 0)
         {           
@@ -56,6 +57,7 @@ public class GetUDPMessage: MonoBehaviour
         //如果有数据 则循环遍历传入处理类
         for (int i = m_array_data.Count-1; i >= 0; --i)
         {
+            Debug.Log("data coming");
             m_messageManage.MessageManage(m_array_data[i]);
             m_array_data.RemoveAt(i);//传入后移除
         }
